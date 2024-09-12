@@ -1,0 +1,14 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="App.Clinic.MainPage">
+
+    <ScrollView>
+        <VerticalStackLayout>
+            <Button Text="Manage Patients" Grid.Row="0" Clicked="Patients_Clicked"/>
+            <Button Text="Manage Physicians" Grid.Row="1" />
+            <Button Text="Manage Appointments" Grid.Row="2" />
+        </VerticalStackLayout>
+    </ScrollView>
+
+</ContentPage>
