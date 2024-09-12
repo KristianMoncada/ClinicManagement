@@ -6,4 +6,9 @@ public partial class PatientManagement : ContentPage
 	{
 		InitializeComponent();
 	}
+
+	private void Cancel_Clicked(object sender, EventArgs e)
+	{
+		Shell.Current.GoToAsync("//MainPage");
+    }
 }
