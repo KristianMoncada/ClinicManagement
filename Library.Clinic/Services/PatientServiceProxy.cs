@@ -5,32 +5,64 @@ using System.Linq;
 
 namespace Library.Clinic.Services
 {
-    public static class PatientServiceProxy
+    public class PatientServiceProxy
     {
-        public static int lastKey
+        private static PatientServiceProxy? instance;
+
+        private List<Patient> patients;
+
+        private PatientServiceProxy()
+        {
+            patients = new List<Patient>
+            {
+                new Patient { Id = 1, Name = "John Doe" },
+                new Patient { Id = 2, Name = "Jane Doe" }
+            };
+        }
+
+        // This is the singleton instance accessor
+        public static PatientServiceProxy Current
+        {
+            get
+            {
+                if (instance == null)
+                {
+                    instance = new PatientServiceProxy();
+                }
+                return instance;
+            }
+        }
+
+        public List<Patient> Patients
+        {
+            get
+            {
+                return patients;
+            }
+        }
+
+        public int LastKey
         {
             get
             {
                 if (Patients.Any())
                 {
-                    return Patients.Select(x => x.Id).Max();
+                    return Patients.Max(x => x.Id);
                 }
                 return 0;
             }
         }
 
-        public static List<Patient> Patients { get; private set; } = new List<Patient>();
-
-        public static void AddPatient(Patient patient)
+        public void AddPatient(Patient patient)
         {
             if (patient.Id <= 0)
             {
-                patient.Id = lastKey + 1;
+                patient.Id = LastKey + 1;
             }
             Patients.Add(patient);
         }
 
-        public static void DeletePatient(int id)
+        public void DeletePatient(int id)
         {
             var patientToRemove = Patients.FirstOrDefault(p => p.Id == id);
             if (patientToRemove != null)
