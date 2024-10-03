@@ -25,8 +25,19 @@ public partial class PatientManagement : ContentPage, INotifyPropertyChanged
 		Shell.Current.GoToAsync("//PatientDetails");
     }
 
+    private void Edit_Clicked(object sender, EventArgs e)
+    {
+        Shell.Current.GoToAsync("//PatientDetails");
+    }
+
+    private void Delete_Clicked(object sender, EventArgs e)
+    {
+		(BindingContext as PatientManagementViewModel)?.Delete();
+    }
+
     private void PatientManagement_NavigatedTo(object sender, NavigatedToEventArgs e)
     {
 		(BindingContext as PatientManagementViewModel)? .Refresh();
     }
+
 }
