@@ -30,6 +30,7 @@ public partial class PatientView : ContentPage
 
     private void PatientView_NavigatedTo(object sender, NavigatedToEventArgs e)
     {
-        BindingContext = new Patient();
+        if(Id )
+        BindingContext = PatientServiceProxy.Current.Patients.FirstOrDefault();
     }
 }
