@@ -2,6 +2,7 @@ namespace App.Clinic.Views;
 using Library.Clinic.Models;
 using Library.Clinic.Services;
 
+[QueryProperty(nameof(PatientId), "patientId")]
 
 public partial class PatientView : ContentPage
 {
@@ -9,6 +10,8 @@ public partial class PatientView : ContentPage
 	{
 		InitializeComponent();
     }
+
+    public int PatientId { get; set; }
 
     private void Cancel_Clicked(object sender, EventArgs e)
     {
@@ -22,7 +25,7 @@ public partial class PatientView : ContentPage
         {
             PatientServiceProxy
             .Current
-            .AddPatient(BindingContext as Patient);
+            .AddOrUpdatePatient(BindingContext as Patient);
         }
 
         Shell.Current.GoToAsync("//Patients");
@@ -30,7 +33,13 @@ public partial class PatientView : ContentPage
 
     private void PatientView_NavigatedTo(object sender, NavigatedToEventArgs e)
     {
-        if( )
-        BindingContext = PatientServiceProxy.Current.Patients.FirstOrDefault();
+        if(PatientId > 0)
+        {
+            BindingContext = PatientServiceProxy.Current.Patients.FirstOrDefault(p => p.Id == PatientId);
+        }
+        else
+        {
+            BindingContext = new Patient();
+        }
     }
 }
