@@ -1,5 +1,6 @@
 using Library.Clinic.Models;
 using Library.Clinic.Services;
+using System;
 using System.Linq;
 
 namespace App.Clinic.Views
@@ -9,8 +10,15 @@ namespace App.Clinic.Views
     {
         public int AppointmentId { get; set; }
 
-        // Property to handle appointment time
-        public TimeSpan AppointmentTime { get; set; }
+        // Bindable property to handle appointment time with two-way binding
+        public static readonly BindableProperty AppointmentTimeProperty =
+            BindableProperty.Create(nameof(AppointmentTime), typeof(TimeSpan), typeof(AppointmentView), default(TimeSpan), BindingMode.TwoWay);
+
+        public TimeSpan AppointmentTime
+        {
+            get => (TimeSpan)GetValue(AppointmentTimeProperty);
+            set => SetValue(AppointmentTimeProperty, value);
+        }
 
         public AppointmentView()
         {
@@ -27,15 +35,17 @@ namespace App.Clinic.Views
             var appointmentToSave = BindingContext as Appointment;
             if (appointmentToSave != null)
             {
-                // Combine the selected date and time for the appointment
+                // Combine the selected date and time
                 appointmentToSave.AppointmentDate = appointmentToSave.AppointmentDate.Date + AppointmentTime;
 
+                // Validate appointment date and time
                 if (!Appointment.IsValidAppointmentTime(appointmentToSave.AppointmentDate))
                 {
                     await DisplayAlert("Error", "Appointment must be between 8 AM and 5 PM, Monday to Friday.", "OK");
                     return;
                 }
 
+                // Add or update the appointment
                 if (appointmentToSave.Id == 0)
                 {
                     AppointmentServiceProxy.AddAppointment(appointmentToSave);
@@ -49,19 +59,28 @@ namespace App.Clinic.Views
             await Shell.Current.GoToAsync("//AppointmentManagement");
         }
 
+
         private void AppointmentView_NavigatedTo(object sender, NavigatedToEventArgs e)
         {
             if (AppointmentId > 0)
             {
+                // Load existing appointment for editing
                 var existingAppointment = AppointmentServiceProxy.Appointments.FirstOrDefault(a => a.Id == AppointmentId);
                 BindingContext = existingAppointment;
-                AppointmentTime = existingAppointment?.AppointmentDate.TimeOfDay ?? new TimeSpan(9, 0, 0);
+
+                // Set AppointmentTime from existing appointment or keep default if null
+                AppointmentTime = existingAppointment?.AppointmentDate.TimeOfDay ?? AppointmentTime;
             }
             else
             {
-                BindingContext = new Appointment();
-                AppointmentTime = new TimeSpan(9, 0, 0); // Default time set to 9 AM
+                // Initialize a new appointment with default date and time only if creating a new one
+                var newAppointment = new Appointment { AppointmentDate = DateTime.Today };
+                BindingContext = newAppointment;
+
+                // Set the default time to 9 AM only if creating a new appointment
+                AppointmentTime = new TimeSpan(9, 0, 0); // You can change this default time if needed
             }
         }
+
     }
 }

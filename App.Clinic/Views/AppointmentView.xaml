@@ -15,9 +15,9 @@
 
         <!-- Appointment Date Field -->
         <Label Text="Appointment Date:" />
-        <DatePicker Date="{Binding AppointmentDate}" />
+        <DatePicker Date="{Binding AppointmentDate, Mode=TwoWay}" />
 
-        <!-- Appointment Time Field (Update with Two-Way Binding) -->
+        <!-- Appointment Time Field with Two-Way Binding -->
         <Label Text="Appointment Time:" />
         <TimePicker Time="{Binding AppointmentTime, Mode=TwoWay}" />
 
