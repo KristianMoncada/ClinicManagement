@@ -11,7 +11,7 @@ namespace Library.Clinic.Models
 
         public Appointment()
         {
-            AppointmentDate = DateTime.MinValue;
+            AppointmentDate = DateTime.Today;
         }
 
         public override string ToString()
@@ -22,7 +22,7 @@ namespace Library.Clinic.Models
         public static bool IsValidAppointmentTime(DateTime appointmentDate)
         {
             var time = appointmentDate.TimeOfDay;
-            bool isWithinTimeRange = time >= TimeSpan.FromHours(8) && time <= TimeSpan.FromHours(17);
+            bool isWithinTimeRange = time >= TimeSpan.FromHours(8) && time < TimeSpan.FromHours(17); // Exclude exactly 5 PM
             bool isWeekday = appointmentDate.DayOfWeek >= DayOfWeek.Monday && appointmentDate.DayOfWeek <= DayOfWeek.Friday;
 
             return isWithinTimeRange && isWeekday;

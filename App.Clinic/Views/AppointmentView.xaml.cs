@@ -59,7 +59,6 @@ namespace App.Clinic.Views
             await Shell.Current.GoToAsync("//AppointmentManagement");
         }
 
-
         private void AppointmentView_NavigatedTo(object sender, NavigatedToEventArgs e)
         {
             if (AppointmentId > 0)
@@ -81,6 +80,5 @@ namespace App.Clinic.Views
                 AppointmentTime = new TimeSpan(9, 0, 0); // You can change this default time if needed
             }
         }
-
     }
 }
