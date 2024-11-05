@@ -16,6 +16,14 @@ namespace Library.Clinic.Services
 
         public static void AddAppointment(Appointment appointment)
         {
+            // Check if the PhysicianId exists in the PhysicianServiceProxy
+            if (PhysicianServiceProxy.GetPhysicianById(appointment.PhysicianId) == null)
+            {
+                Console.WriteLine("Error: Physician ID does not exist.");
+                return;
+            }
+
+            // Check if appointment time is valid
             if (!Appointment.IsValidAppointmentTime(appointment.AppointmentDate))
             {
                 Console.WriteLine("Appointment must be between 8am and 5pm, Monday to Friday.");
@@ -33,17 +41,43 @@ namespace Library.Clinic.Services
             Console.WriteLine("Appointment successfully added.");
         }
 
-        public static void ListAllAppointments()
+        public static void UpdateAppointment(Appointment updatedAppointment)
         {
-            if (!Appointments.Any())
+            var existingAppointment = Appointments.FirstOrDefault(a => a.Id == updatedAppointment.Id);
+            if (existingAppointment != null)
             {
-                Console.WriteLine("No appointments available.");
-                return;
-            }
+                if (!Appointment.IsValidAppointmentTime(updatedAppointment.AppointmentDate))
+                {
+                    Console.WriteLine("Appointment must be between 8am and 5pm, Monday to Friday.");
+                    return;
+                }
 
-            foreach (var appointment in Appointments)
+                if (!IsPhysicianAvailable(updatedAppointment.PhysicianId, updatedAppointment.AppointmentDate))
+                {
+                    Console.WriteLine("Physician is already booked for this time.");
+                    return;
+                }
+
+                // Update the existing appointment details
+                existingAppointment.PatientId = updatedAppointment.PatientId;
+                existingAppointment.PhysicianId = updatedAppointment.PhysicianId;
+                existingAppointment.AppointmentDate = updatedAppointment.AppointmentDate;
+
+                Console.WriteLine("Appointment successfully updated.");
+            }
+            else
             {
-                Console.WriteLine(appointment);
+                Console.WriteLine("Appointment not found.");
+            }
+        }
+
+        public static void DeleteAppointment(int id)
+        {
+            var appointment = Appointments.FirstOrDefault(a => a.Id == id);
+            if (appointment != null)
+            {
+                Appointments.Remove(appointment);
+                Console.WriteLine("Appointment deleted successfully.");
             }
         }
 

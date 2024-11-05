@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="App.Clinic.Views.AppointmentView"
+             Title="Appointment Details"
+             NavigatedTo="AppointmentView_NavigatedTo">
+    <VerticalStackLayout Padding="10">
+        <!-- Patient ID Field -->
+        <Label Text="Patient ID:" />
+        <Entry Text="{Binding PatientId}" Placeholder="Enter patient ID" />
+
+        <!-- Physician ID Field -->
+        <Label Text="Physician ID:" />
+        <Entry Text="{Binding PhysicianId}" Placeholder="Enter physician ID" />
+
+        <!-- Appointment Date Field -->
+        <Label Text="Appointment Date:" />
+        <DatePicker Date="{Binding AppointmentDate}" />
+
+        <!-- Appointment Time Field (Update with Two-Way Binding) -->
+        <Label Text="Appointment Time:" />
+        <TimePicker Time="{Binding AppointmentTime, Mode=TwoWay}" />
+
+        <!-- Buttons -->
+        <Button Text="Save" Clicked="OnSave_Clicked" />
+        <Button Text="Cancel" Clicked="Cancel_Clicked" />
+    </VerticalStackLayout>
+</ContentPage>

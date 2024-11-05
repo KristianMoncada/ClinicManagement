@@ -8,18 +8,46 @@
     Shell.FlyoutBehavior="Disabled"
     Title="App.Clinic">
 
+    <!-- Route for Main Page -->
     <ShellContent
         Title="Home"
         ContentTemplate="{DataTemplate local:MainPage}"
         Route="MainPage" />
+
+    <!-- Route for Managing Patients -->
     <ShellContent
         Title="Manage Patients"
         ContentTemplate="{DataTemplate views:PatientManagement}"
         Route="Patients" />
+
+    <!-- Route for Patient Details (Add/Edit) -->
     <ShellContent
         Title="Patient Details"
         ContentTemplate="{DataTemplate views:PatientView}"
         Route="PatientDetails" />
-    
+
+    <!-- Route for Managing Physicians -->
+    <ShellContent
+        Title="Manage Physicians"
+        ContentTemplate="{DataTemplate views:PhysicianManagement}"
+        Route="PhysicianManagement" />
+
+    <!-- Route for Physician Details (Add/Edit) -->
+    <ShellContent
+        Title="Physician Details"
+        ContentTemplate="{DataTemplate views:PhysicianView}"
+        Route="PhysicianDetails" />
+
+    <!-- Route for Managing Appointments -->
+    <ShellContent
+        Title="Manage Appointments"
+        ContentTemplate="{DataTemplate views:AppointmentManagement}"
+        Route="AppointmentManagement" />
+
+    <!-- Route for Appointment Details (Add/Edit) -->
+    <ShellContent
+        Title="Appointment Details"
+        ContentTemplate="{DataTemplate views:AppointmentView}"
+        Route="AppointmentDetails" />
 
 </Shell>
