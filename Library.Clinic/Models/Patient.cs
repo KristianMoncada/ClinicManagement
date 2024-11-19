@@ -5,6 +5,18 @@ namespace Library.Clinic.Models
 {
     public class Patient
     {
+        public override string ToString()
+        {
+            return Display;
+        }
+
+        public string Display
+        {
+            get
+            {
+                return $"[{Id}] {Name}";
+            }
+        }
         public int Id { get; set; }
         private string? name;
         public string Name
@@ -39,12 +51,6 @@ namespace Library.Clinic.Models
         public void AddMedicalNotes(string note)
         {
             MedicalNotes.Add(note);
-        }
-
-        public override string ToString()
-        {
-            var notes = string.Join(", ", MedicalNotes);
-            return $"{Id}. {Name}, Birthday: {Birthday.ToShortDateString()}, Address: {Address}, Race: {Race}, Gender: {Gender}, Notes: {notes}";
         }
     }
 }
