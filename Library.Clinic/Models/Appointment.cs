@@ -8,6 +8,7 @@ namespace Library.Clinic.Models
         public int PatientId { get; set; }
         public int PhysicianId { get; set; }
         public DateTime AppointmentDate { get; set; }
+        public TimeSpan AppointmentTime { get; set; }
 
         public Appointment()
         {

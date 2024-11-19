@@ -36,7 +36,7 @@ namespace App.Clinic.Views
             if (appointmentToSave != null)
             {
                 // Combine the selected date and time
-                appointmentToSave.AppointmentDate = appointmentToSave.AppointmentDate.Date + AppointmentTime;
+                appointmentToSave.AppointmentDate = appointmentToSave.AppointmentDate.Date + appointmentToSave.AppointmentTime;
 
                 // Validate appointment date and time
                 if (!Appointment.IsValidAppointmentTime(appointmentToSave.AppointmentDate))
@@ -75,9 +75,6 @@ namespace App.Clinic.Views
                 // Initialize a new appointment with default date and time only if creating a new one
                 var newAppointment = new Appointment { AppointmentDate = DateTime.Today };
                 BindingContext = newAppointment;
-
-                // Set the default time to 9 AM only if creating a new appointment
-                AppointmentTime = new TimeSpan(9, 0, 0); // You can change this default time if needed
             }
         }
     }
