@@ -12,6 +12,7 @@ namespace App.Clinic.ViewModels
     public class PatientViewModel
     {
         public Patient? Model { get; set; }
+        public ICommand? DeleteCommand { get; set; }
 
         public int Id
         {
@@ -46,14 +47,30 @@ namespace App.Clinic.ViewModels
             }
         }
 
+        public void SetupCommands()
+        {
+            DeleteCommand = new Command(DoDelete);
+        }
+
+        private void DoDelete()
+        {
+            if (Id > 0)
+            {
+                PatientServiceProxy.Current.DeletePatient(Id);
+                Shell.Current.GoToAsync("//Patients");
+            }
+        }
+
         public PatientViewModel()
         {
             Model = new Patient();
+            SetupCommands();
         }
 
         public PatientViewModel(Patient? _model)
         {
             Model = _model;
+            SetupCommands();
         }
 
         public void ExecuteAdd()
