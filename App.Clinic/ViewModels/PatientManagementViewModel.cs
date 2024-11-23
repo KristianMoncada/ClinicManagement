@@ -21,12 +21,14 @@ namespace App.Clinic.ViewModels
         }
 
         public PatientViewModel? SelectedPatient { get; set; }
+        public string? Query { get; set; }
 
         public ObservableCollection<PatientViewModel> Patients
         {
             get
             {
-                return new ObservableCollection<PatientViewModel>(PatientServiceProxy.Current.Patients.Where(p=>p != null).Select(p => new PatientViewModel(p)));
+                var retVal = new ObservableCollection<PatientViewModel>(PatientServiceProxy.Current.Patients.Take(100).Where(p=>p != null).Where(p => p.Name.ToUpper().Contains(Query?.ToUpper() ?? string.Empty)).Select(p => new PatientViewModel(p)));
+                return retVal;
             }
         }
 
