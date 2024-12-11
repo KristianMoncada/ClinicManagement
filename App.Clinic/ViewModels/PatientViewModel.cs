@@ -1,10 +1,5 @@
 ﻿using Library.Clinic.Models;
 using Library.Clinic.Services;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Input;
 
 namespace App.Clinic.ViewModels
@@ -17,20 +12,12 @@ namespace App.Clinic.ViewModels
 
         public int Id
         {
-            get
-            {
-                if (Model == null)
-                {
-                    return -1;
-                }
-                return Model.Id;
-            }
+            get => Model?.Id ?? -1;
             set
             {
                 if (Model != null && Model.Id != value)
                 {
                     Model.Id = value;
-
                 }
             }
         }
@@ -38,12 +25,48 @@ namespace App.Clinic.ViewModels
         public string Name
         {
             get => Model?.Name ?? string.Empty;
-
             set
             {
                 if (Model != null)
                 {
                     Model.Name = value;
+                }
+            }
+        }
+
+        // New Insurance Properties
+        public string InsurancePlanName
+        {
+            get => Model?.InsurancePlanName ?? string.Empty;
+            set
+            {
+                if (Model != null)
+                {
+                    Model.InsurancePlanName = value;
+                }
+            }
+        }
+
+        public decimal InsuranceDiscountPercentage
+        {
+            get => Model?.InsuranceDiscountPercentage ?? 0;
+            set
+            {
+                if (Model != null)
+                {
+                    Model.InsuranceDiscountPercentage = value;
+                }
+            }
+        }
+
+        public decimal InsuranceCoverageAmount
+        {
+            get => Model?.InsuranceCoverageAmount ?? 0;
+            set
+            {
+                if (Model != null)
+                {
+                    Model.InsuranceCoverageAmount = value;
                 }
             }
         }
@@ -67,7 +90,7 @@ namespace App.Clinic.ViewModels
         {
             if (pvm == null)
             {
-                return;   
+                return;
             }
             var selectedPatientId = pvm?.Id ?? 0;
             Shell.Current.GoToAsync($"//PatientDetails?patientId={selectedPatientId}");
@@ -90,8 +113,8 @@ namespace App.Clinic.ViewModels
             if (Model != null)
             {
                 PatientServiceProxy
-                .Current
-                .AddOrUpdatePatient(Model);
+                    .Current
+                    .AddOrUpdatePatient(Model);
             }
 
             Shell.Current.GoToAsync("//Patients");

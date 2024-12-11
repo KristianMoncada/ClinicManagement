@@ -1,0 +1,40 @@
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:viewModels="clr-namespace:App.Clinic.ViewModels"
+             x:Class="App.Clinic.Views.TreatmentManagementView"
+             Title="Treatment Management">
+    <ContentPage.BindingContext>
+        <viewModels:TreatmentManagementViewModel />
+    </ContentPage.BindingContext>
+
+    <StackLayout Padding="20" Spacing="15">
+        <!-- Back Button -->
+        <Button Text="Back to Home" Clicked="OnBackButtonClicked" />
+
+        <Label Text="Manage Treatments" FontSize="24" HorizontalOptions="Center" />
+
+        <!-- Input Fields -->
+        <Entry Placeholder="Treatment Name" Text="{Binding NewTreatmentName}" />
+        <Entry Placeholder="Treatment Price" Text="{Binding NewTreatmentPrice}" Keyboard="Numeric" />
+        <Entry Placeholder="Insurance Discount (%)" Text="{Binding InsuranceDiscount}" Keyboard="Numeric" />
+        <Entry Placeholder="Insurance Coverage Amount" Text="{Binding InsuranceCoverage}" Keyboard="Numeric" />
+
+        <!-- Add Treatment Button -->
+        <Button Text="Add Treatment" Command="{Binding AddTreatmentCommand}" />
+
+        <!-- Treatment List -->
+        <Label Text="Added Treatments:" FontSize="18" Margin="0,20,0,0" />
+        <CollectionView ItemsSource="{Binding Treatments}" Margin="0,10,0,0">
+            <CollectionView.ItemTemplate>
+                <DataTemplate>
+                    <StackLayout Orientation="Horizontal" Padding="10">
+                        <Label Text="{Binding Name}" FontSize="18" />
+                        <Label Text="{Binding Price, StringFormat='Price: {0:C}'}" FontSize="16" Margin="10,0,0,0" />
+                        <Label Text="{Binding InsuranceDiscountPercentage, StringFormat='Discount: {0}%'}" FontSize="16" Margin="10,0,0,0" />
+                        <Label Text="{Binding InsuranceCoverageAmount, StringFormat='Coverage: {0:C}'}" FontSize="16" Margin="10,0,0,0" />
+                    </StackLayout>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+    </StackLayout>
+</ContentPage>

@@ -50,4 +50,10 @@
         ContentTemplate="{DataTemplate views:AppointmentView}"
         Route="AppointmentDetails" />
 
+    <!-- Route for Managing Treatments -->
+    <ShellContent
+        Title="Manage Treatments"
+        ContentTemplate="{DataTemplate views:TreatmentManagementView}"
+        Route="TreatmentManagement" />
+
 </Shell>
